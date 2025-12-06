@@ -9,26 +9,31 @@ set( CMAKE_CXX_STANDARD_REQUIRED ON )
 option( SM5_EXAMPLES "Build examples for ScriptingMachine5" ON )
 
 set( SM5_SOURCES
-	src/Assembly.cpp
-	src/Assembly.hpp
-	src/ErrorWriter.cpp
-	src/ErrorWriter.hpp
-	src/Host.cpp
-	src/Host.hpp
-	src/Library.cpp
-	src/Library.hpp
-	src/Utility.hpp
+	"src/Assembly.cpp"
+	"src/ErrorWriter.cpp"
+	"src/Host.cpp"
+	"src/Library.cpp"
+	"src/Utility.hpp"
 
-	src/DotNet/coreclr_delegates.h
-	src/DotNet/hostfxr.h
+	"src/DotNet/coreclr_delegates.h"
+	"src/DotNet/hostfxr.h"
 )
 
+set(SM5_HEADERS
+	"include/Assembly.hpp"
+	"include/ErrorWriter.hpp"
+	"include/Host.hpp"
+	"include/Library.hpp"
+
+	"include/common.h"
+	"include/smv.h")
+
 ## VS filters
-source_group( TREE ${CMAKE_CURRENT_SOURCE_DIR} FILES ${SM5_SOURCES} )
+source_group( TREE ${CMAKE_CURRENT_SOURCE_DIR} FILES ${SM5_SOURCES} ${SM5_HEADERS} )
 
 ## ScriptingMachine5 library
-add_library( ScriptingMachine5 STATIC ${SM5_SOURCES} )
-target_include_directories( ScriptingMachine5 INTERFACE src )
+add_library( ScriptingMachine5 STATIC ${SM5_SOURCES} ${SM5_HEADERS} )
+target_include_directories( ScriptingMachine5 PUBLIC "include" PRIVATE "src" )
 
 ## Examples
 add_subdirectory( examples/Example1_BasicUsage )

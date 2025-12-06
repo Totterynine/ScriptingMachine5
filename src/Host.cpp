@@ -7,6 +7,8 @@
 #include "ErrorWriter.hpp"
 #include "Library.hpp"
 
+#include "smv.h"
+
 #include <array>
 #include <filesystem>
 
@@ -17,6 +19,30 @@
 #endif
 
 using namespace smv;
+
+int smv_host_init(const char* runtime_config_path)
+{
+	bool result = Host::Init(runtime_config_path);
+
+	return result ? 0 : 1;
+}
+
+void smv_host_shutdown()
+{
+	Host::Shutdown();
+}
+
+smv_assembly_t smv_load_assembly(const char* assembly_path)
+{
+	Assembly* assembly = Host::LoadAssembly(assembly_path);
+
+	return reinterpret_cast<smv_assembly_t>(assembly);
+}
+
+void* smv_get_method(const char* namespace_, const char* type, const char* method)
+{
+	return Host::GetMethod(namespace_, type, method);
+}
 
 bool Host::Init( std::string_view runtimeConfigPath )
 {
