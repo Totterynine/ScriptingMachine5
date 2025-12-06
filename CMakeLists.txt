@@ -6,7 +6,7 @@ project( ScriptingMachine5 VERSION 1.0 LANGUAGES CXX )
 set( CMAKE_CXX_STANDARD 17 )
 set( CMAKE_CXX_STANDARD_REQUIRED ON )
 
-option( SM5_EXAMPLES "Build examples for ScriptingMachine5" ON )
+option( SM5_EXAMPLES "Build examples for ScriptingMachine5" OFF )
 
 set( SM5_SOURCES
 	"src/Assembly.cpp"
@@ -36,5 +36,7 @@ add_library( ScriptingMachine5 STATIC ${SM5_SOURCES} ${SM5_HEADERS} )
 target_include_directories( ScriptingMachine5 PUBLIC "include" PRIVATE "src" )
 
 ## Examples
-add_subdirectory( examples/Example1_BasicUsage )
-add_subdirectory( examples/Example2_PassingData )
+if(SM5_EXAMPLES)
+	add_subdirectory( examples/Example1_BasicUsage )
+	add_subdirectory( examples/Example2_PassingData )
+endif()
